@@ -1,5 +1,4 @@
 import semver from 'semver';
-import minimatch from 'minimatch';
 import getArgumentsInstance from './arguments/ArgumentsFactory';
 
 export default class Reporter {
@@ -13,7 +12,9 @@ export default class Reporter {
   calculateCoverageResults() {
     const filesToCheck = this.getFilesToCheck();
     const fileReports = this.getCoverageReportByFile(filesToCheck);
+
     const addedLinesCount = fileReports.reduce((sum, { linesCount }) => sum + linesCount, 0);
+
     const totalCoveredLinesCount = fileReports
       .reduce((sum, { coveredLinesCount }) => sum + coveredLinesCount, 0);
 
@@ -24,10 +25,10 @@ export default class Reporter {
   }
 
   getFilesToCheck() {
-    const nameTemplate = this.args.FileTemplate;
+    const nameTemplate = new RegExp(this.args.FileTemplate);
 
     return this.gitDiff.ModifiedLines
-      .filter(({ fileName }) => minimatch(fileName, nameTemplate));
+      .filter(({ fileName }) => nameTemplate.test(fileName));
   }
 
   getCoverageReportByFile(filesToCheck) {
