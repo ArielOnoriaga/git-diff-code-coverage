@@ -12,7 +12,7 @@ Application used to check code coverage by tests on added lines (ex. check cover
 
 1. Install tool
 ```
-npm i -g git-diff-code-coverage
+npm i -D code-coverage-git-diff
 ```
 
 2. Run test to generate coverage report
@@ -23,7 +23,7 @@ npm test
 3. Run application to analyze it
 
 ```
-gitDiffCodeCoverage --repoPath=/Users/user/Src/example --reportPath=artifacts/coverage/coverage-summary.json --fileTemplate=app/**/*.js --source=newBranch --target=master --reportFormat=lcov -v
+gitDiffCodeCoverage --repoPath=$(pwd) --reportPath=artifacts/coverage/coverage-summary.json --fileTemplate=app/**/*.js --source=newBranch --target=master --reportFormat=json -v -m 80
 ```
 
 ## Arguments
